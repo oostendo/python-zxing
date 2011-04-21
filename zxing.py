@@ -9,7 +9,7 @@
 #  otherwise you must specify the location as a parameter to the constructor
 #
 
-import subprocess, re
+import subprocess, re, os
 
 class BarCodeReader():
   location = ""
@@ -17,7 +17,13 @@ class BarCodeReader():
   libs = ["javase/javase.jar", "core/core.jar"]
   args = ["-cp", "LIBS", "com.google.zxing.client.j2se.CommandLineRunner"]
 
-  def __init__(self, loc=".."):
+  def __init__(self, loc=""):
+    if not len(loc):
+      if (os.environ.has_key("ZXING_LIBRARY")):
+        loc = os.environ["ZXING_LIBRARY"]
+      else:
+        loc = ".."
+
     self.location = loc	
 
   def decode(self, files, try_harder = False):

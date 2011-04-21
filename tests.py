@@ -21,7 +21,7 @@ Also, there were 4 result points.
 """
   
   barcode = BarCode(text)  
-  if (barcode.codetype != "DATA_MATRIX"):
+  if (barcode.format != "DATA_MATRIX"):
     return 0
 
   if (barcode.raw != "36MVENBAEEAS04403EB0284ZB"):
@@ -37,7 +37,7 @@ Also, there were 4 result points.
 
 
 def test_codereader():
-  zx = CodeReader(zxing_location) 
+  zx = BarCodeReader(zxing_location) 
 
   barcode = zx.decode(testimage)
   
