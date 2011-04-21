@@ -11,7 +11,7 @@
 
 import subprocess, re
 
-class CodeReader():
+class BarCodeReader():
   location = ""
   command = "java"
   libs = ["javase/javase.jar", "core/core.jar"]
