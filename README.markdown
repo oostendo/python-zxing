@@ -5,7 +5,7 @@ barcodes in images, and return position information and decoded values.  This
 will let you read barcodes from any images in Python.
 
 If you need to threshold or filter your image prior to sending to ZXing, I 
-recommend using functions from (SimpleCV)[http://sf.net/p/simplecv].
+recommend using functions from [SimpleCV](http://sf.net/p/simplecv).
 
 Instructions for use
 
