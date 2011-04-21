@@ -42,7 +42,6 @@ class CodeReader():
     codes = []
     file_results = stdout.split("\nfile:")
     for result in file_results:
-      print result
       lines = stdout.split("\n")
       if (re.search("No barcode found", lines[0])):
         codes.append(None)
@@ -57,7 +56,7 @@ class CodeReader():
       	
 #this is the barcode class which has 
 class BarCode:
-  codetype = ""
+  format = ""
   points = []
   data = ""
   raw = ""
@@ -71,7 +70,7 @@ class BarCode:
     for l in lines:
       m = re.search("format:\s([^,]+)", l)
       if (not raw_block and not parsed_block and not point_block and m):
-        self.codetype = m.group(1)
+        self.format = m.group(1)
         continue
 
       if (not raw_block and not parsed_block and not point_block and l == "Raw result:"):
@@ -99,7 +98,6 @@ class BarCode:
       if (point_block):
         m = re.search("Point\s(\d+):\s\(([\d\.]+),([\d\.]+)\)", l)
         if (m):
-          print m.group(1) + m.group(2) + m.group(3)
           self.points.append((float(m.group(2)), float(m.group(3))))
         
     return

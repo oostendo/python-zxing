@@ -34,7 +34,7 @@ the output from ZXing's CommandLineRunner into a BarCode object which includes:
       Point 3: (205.23952,21.0)
     """)
     
-    print b.datatype #FAKE_DATA
+    print b.format #FAKE_DATA
     print b.raw #foo-bar|the bar of foo
     print b.data #foo-bar\nthe bar of foo
     print b.points #[(24.0, 18.0) ... ]
