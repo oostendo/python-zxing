@@ -1,6 +1,11 @@
 python-zxing - a quick and dirty wrapper fo the [ZXing barcode library](http://code.google.com/p/zxing/)
 
-This is a hack subprocess control library that gives you a reasonable Python interface to the ZXing command line.
+This is a hack subprocess control library that gives you a reasonable Python interface to the ZXing command line.  ZXing will recognize and decode 1D and 2D
+barcodes in images, and return position information and decoded values.  This
+will let you read barcodes from any images in Python.
+
+If you need to threshold or filter your image prior to sending to ZXing, I 
+recommend using functions from (SimpleCV)[http://sf.net/p/simplecv].
 
 Instructions for use
 
