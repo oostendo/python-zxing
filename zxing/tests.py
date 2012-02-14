@@ -37,7 +37,8 @@ Also, there were 4 result points.
 
 
 def test_codereader():
-  zx = BarCodeReader(zxing_location) 
+  #~ zx = BarCodeReader(zxing_location)
+  zx = BarCodeReader()
 
   barcode = zx.decode(testimage)
   

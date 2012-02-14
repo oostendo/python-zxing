@@ -9,6 +9,7 @@
 #  otherwise you must specify the location as a parameter to the constructor
 #
 
+__version__ = '0.2'
 import subprocess, re, os
 
 class BarCodeReader():
@@ -107,3 +108,7 @@ class BarCode:
           self.points.append((float(m.group(2)), float(m.group(3))))
         
     return
+
+
+if __name__ == "__main__":
+    print "Zxing module"
