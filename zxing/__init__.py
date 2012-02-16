@@ -93,11 +93,11 @@ class BarCode:
         parsed_block = True
         continue
 
-      if (parsed_block and not re.match("Also, there were", l)):
+      if (parsed_block and not re.match("Found\s\d\sresult\spoints", l)):
         self.data += l + "\n" 
         continue
     
-      if (parsed_block and re.match("Also, there were", l)):
+      if (parsed_block and re.match("Found\s\d\sresult\spoints", l)):
         parsed_block = False
         point_block = True
         continue
@@ -106,7 +106,8 @@ class BarCode:
         m = re.search("Point\s(\d+):\s\(([\d\.]+),([\d\.]+)\)", l)
         if (m):
           self.points.append((float(m.group(2)), float(m.group(3))))
-        
+
+    self.points = self.points[0:4]
     return
 
 
