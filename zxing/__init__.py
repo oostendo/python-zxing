@@ -74,6 +74,7 @@ class BarCode:
     parsed_block = False
     point_block = False
 
+    self.points = []
     for l in lines:
       m = re.search("format:\s([^,]+)", l)
       if (not raw_block and not parsed_block and not point_block and m):
@@ -107,7 +108,7 @@ class BarCode:
         if (m):
           self.points.append((float(m.group(2)), float(m.group(3))))
 
-    self.points = self.points[0:4]
+    
     return
 
 
