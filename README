@@ -9,10 +9,10 @@ recommend using functions from [SimpleCV](http://sf.net/p/simplecv).
 
 Instructions for use
 
-    wget http://code.google.com/p/zxing/downloads/detail?name=ZXing-1.6.zip
+    wget http://zxing.googlecode.com/files/ZXing-1.6.zip
     cd zxing-1.6 
     ant -f core/build.xml
-    ant -f javase2/build.xml 
+    ant -f javase/build.xml 
     git clone git://github.com/oostendo/python-zxing.git
     cd python-zxing
     nosetest tests.py
