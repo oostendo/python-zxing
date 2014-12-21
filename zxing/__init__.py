@@ -16,6 +16,7 @@ class BarCodeReader():
   location = ""
   command = "java"
   libs = ["javase/javase.jar", "core/core.jar"]
+  #see http://stackoverflow.com/questions/13730396/enabling-pdf417-decoding-in-zxing/13730904#13730904
   args = ["-cp", "LIBS", "com.google.zxing.client.j2se.CommandLineRunner"]
 
   def __init__(self, loc=""):
@@ -27,7 +28,7 @@ class BarCodeReader():
 
     self.location = loc	
 
-  def decode(self, files, try_harder = False):
+  def decode(self, files, try_harder = True):
     cmd = [self.command]
     cmd += self.args[:] #copy arg values
     if (try_harder):
@@ -64,7 +65,7 @@ class BarCodeReader():
 #this is the barcode class which has 
 class BarCode:
   format = ""
-  points = []
+  location = []
   data = ""
   raw = ""
 
@@ -106,7 +107,7 @@ class BarCode:
       if (point_block):
         m = re.search("Point\s(\d+):\s\(([\d\.]+),([\d\.]+)\)", l)
         if (m):
-          self.points.append((float(m.group(2)), float(m.group(3))))
+          self.location.append((float(m.group(2)), float(m.group(3))))
 
     
     return
