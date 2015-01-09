@@ -9,7 +9,7 @@
 #  otherwise you must specify the location as a parameter to the constructor
 #
 
-__version__ = '0.2'
+__version__ = '0.3'
 import subprocess, re, os
 
 class BarCodeReader():
@@ -25,19 +25,21 @@ class BarCodeReader():
       else:
         loc = ".."
 
-    self.location = loc	
+    self.location = loc
 
-  def decode(self, files, try_harder = False):
+  def decode(self, files, try_harder = False, qr_only = False):
     cmd = [self.command]
     cmd += self.args[:] #copy arg values
-    if (try_harder):
+    if try_harder:
       cmd.append("--try_harder")
+    if qr_only:
+      cmd.append("--possibleFormats=QR_CODE")
 
     libraries = [self.location + "/" + l for l in self.libs]
 
     cmd = [ c if c != "LIBS" else ":".join(libraries) for c in cmd ]
 
-    #send one file, or multiple files in a list
+    # send one file, or multiple files in a list
     SINGLE_FILE = False
     if type(files) != type(list()):
       cmd.append(files)
@@ -45,23 +47,23 @@ class BarCodeReader():
     else:
       cmd += files
 
-    (stdout, stderr) = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()
+    (stdout, stderr) = subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True).communicate()
     codes = []
     file_results = stdout.split("\nfile:")
     for result in file_results:
       lines = stdout.split("\n")
-      if (re.search("No barcode found", lines[0])):
+      if re.search("No barcode found", lines[0]):
         codes.append(None)
         continue
 
       codes.append(BarCode(result))
 
-    if (SINGLE_FILE):
+    if SINGLE_FILE:
       return codes[0]
     else:
       return codes
-      	
-#this is the barcode class which has 
+
+#this is the barcode class which has
 class BarCode:
   format = ""
   points = []
@@ -77,40 +79,39 @@ class BarCode:
     self.points = []
     for l in lines:
       m = re.search("format:\s([^,]+)", l)
-      if (not raw_block and not parsed_block and not point_block and m):
+      if not raw_block and not parsed_block and not point_block and m:
         self.format = m.group(1)
         continue
 
-      if (not raw_block and not parsed_block and not point_block and l == "Raw result:"):
+      if not raw_block and not parsed_block and not point_block and l == "Raw result:":
         raw_block = True
         continue
 
-      if (raw_block and l != "Parsed result:"):
+      if raw_block and l != "Parsed result:":
         self.raw += l + "\n"
         continue
 
-      if (raw_block and l == "Parsed result:"):
+      if raw_block and l == "Parsed result:":
         raw_block = False
         parsed_block = True
         continue
 
-      if (parsed_block and not re.match("Found\s\d\sresult\spoints", l)):
-        self.data += l + "\n" 
+      if parsed_block and not re.match("Found\s\d\sresult\spoints", l):
+        self.data += l + "\n"
         continue
-    
-      if (parsed_block and re.match("Found\s\d\sresult\spoints", l)):
+
+      if parsed_block and re.match("Found\s\d\sresult\spoints", l):
         parsed_block = False
         point_block = True
         continue
-      
-      if (point_block):
+
+      if point_block:
         m = re.search("Point\s(\d+):\s\(([\d\.]+),([\d\.]+)\)", l)
         if (m):
           self.points.append((float(m.group(2)), float(m.group(3))))
 
-    
     return
 
 
 if __name__ == "__main__":
-    print "Zxing module"
+  print("ZXing module")
