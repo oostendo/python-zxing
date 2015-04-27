@@ -9,13 +9,18 @@ recommend using functions from [SimpleCV](http://simplecv.org).
 
 Instructions for use
 
-    wget http://zxing.googlecode.com/files/ZXing-1.6.zip
-    cd zxing-1.6 
-    ant -f core/build.xml
-    ant -f javase/build.xml 
+    git clone https://github.com/zxing/zxing.git
+    cd zxing-master
     git clone git://github.com/oostendo/python-zxing.git
-    cd python-zxing
-    nosetest tests.py
+    mvn install
+    cd core
+    wget http://central.maven.org/maven2/com/google/zxing/core/2.2/core-2.2.jar
+    rename core-2.2.jar to core.jar
+    mvn install
+    cd zxing-master/javase
+    wget http://central.maven.org/maven2/com/google/zxing/javase/2.2/javase-2.2.jar 
+    rename javase-2.2.jar to javase.jar
+    mvn install
 
 The library consists of two classes, BarCodeReader and BarCode.  BarCode parses
 the output from ZXing's CommandLineRunner into a BarCode object which includes:
