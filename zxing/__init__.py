@@ -37,7 +37,10 @@ class BarCodeReader():
 
     libraries = [self.location + "/" + l for l in self.libs]
 
-    cmd = [ c if c != "LIBS" else ":".join(libraries) for c in cmd ]
+    if os.name == 'nt': # Apparently Windows doesn't like ":".
+    	cmd = [ c if c != "LIBS" else ";".join(libraries) for c in cmd ]
+    else:
+    	cmd = [ c if c != "LIBS" else ":".join(libraries) for c in cmd ]
 
     # send one file, or multiple files in a list
     SINGLE_FILE = False
