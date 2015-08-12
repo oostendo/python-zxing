@@ -37,7 +37,7 @@ class BarCodeReader():
 
     libraries = [self.location + "/" + l for l in self.libs]
 
-    cmd = [ c if c != "LIBS" else ":".join(libraries) for c in cmd ]
+    cmd = [ c if c != "LIBS" else os.pathsep.join(libraries) for c in cmd ]
 
     # send one file, or multiple files in a list
     SINGLE_FILE = False
