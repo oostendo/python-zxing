@@ -17,7 +17,7 @@ cd core
 wget http://central.maven.org/maven2/com/google/zxing/core/2.2/core-2.2.jar
 mv core-2.2.jar core.jar # Rename
 mvn install
-cd zxing-master/javase
+cd ../zxing/javase
 wget http://central.maven.org/maven2/com/google/zxing/javase/2.2/javase-2.2.jar 
 mv javase-2.2.jar javase.jar # Rename
 mvn install
