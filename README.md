@@ -12,7 +12,7 @@ If you need to threshold or filter your image prior to sending to ZXing, I recom
 git clone https://github.com/zxing/zxing.git
 cd zxing-master
 git clone git://github.com/oostendo/python-zxing.git
-mvn install
+mvn install #If raised error, use 'rmvn clean install -DskipTests -Drat.skip=true'
 cd core
 wget http://central.maven.org/maven2/com/google/zxing/core/2.2/core-2.2.jar
 mv core-2.2.jar core.jar # Rename
