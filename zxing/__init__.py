@@ -16,7 +16,8 @@ class BarCodeReader():
   location = ""
   command = "java"
   libs = ["javase/javase.jar", "core/core.jar"]
-  args = ["-cp", "LIBS", "com.google.zxing.client.j2se.CommandLineRunner"]
+  args = ["-Dfile.encoding=ISO-8859-1",
+          "-cp", "LIBS", "com.google.zxing.client.j2se.CommandLineRunner"]
 
   def __init__(self, loc=""):
     if not len(loc):
@@ -27,13 +28,15 @@ class BarCodeReader():
 
     self.location = loc
 
-  def decode(self, files, try_harder = False, qr_only = False):
+  def decode(self, files, try_harder = False, qr_only = False, pure_barcode=False):
     cmd = [self.command]
     cmd += self.args[:] #copy arg values
     if try_harder:
       cmd.append("--try_harder")
     if qr_only:
       cmd.append("--possibleFormats=QR_CODE")
+    if pure_barcode:
+      cmd.append("--pure_barcode")
 
     libraries = [self.location + "/" + l for l in self.libs]
 
@@ -47,7 +50,8 @@ class BarCodeReader():
     else:
       cmd += files
 
-    (stdout, stderr) = subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True).communicate()
+    (stdout, stderr) = subprocess.Popen(cmd, stdout=subprocess.PIPE, # universal_newlines=True
+    ).communicate()
     codes = []
     file_results = stdout.split("\nfile:")
     for result in file_results:
