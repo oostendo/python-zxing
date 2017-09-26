@@ -27,13 +27,15 @@ class BarCodeReader():
 
     self.location = loc
 
-  def decode(self, files, try_harder = False, qr_only = False):
+  def decode(self, files, try_harder = False, qr_only = False, multi=False):
     cmd = [self.command]
     cmd += self.args[:] #copy arg values
     if try_harder:
       cmd.append("--try_harder")
     if qr_only:
       cmd.append("--possibleFormats=QR_CODE")
+    if multi:
+      cmd.append("--multi")
 
     libraries = [self.location + "/" + l for l in self.libs]
 
@@ -46,7 +48,6 @@ class BarCodeReader():
       SINGLE_FILE = True
     else:
       cmd += files
-
     (stdout, stderr) = subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True).communicate()
     codes = []
     file_results = stdout.split("\nfile:")
@@ -58,7 +59,7 @@ class BarCodeReader():
 
       codes.append(BarCode(result))
 
-    if SINGLE_FILE:
+    if SINGLE_FILE and not multi:
       return codes[0]
     else:
       return codes
