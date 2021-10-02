@@ -94,7 +94,6 @@ class BarCode:
       if raw_block and l == "Parsed result:":
         raw_block = False
         parsed_block = True
-        continue
 
       if parsed_block and not re.match("Found\s\d\sresult\spoints", l):
         self.data += l + "\n"
